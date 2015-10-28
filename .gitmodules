@@ -1,0 +1,3 @@
+[submodule "src/app/components/calendar/model/calendar"]
+	path = src/app/components/calendar/model/calendar
+	url = https://github.com/xufei/calendar.git
