@@ -1,0 +1,85 @@
+<style>
+    @import "calendar.css";
+</style>
+<div class="calendar">
+    <div class="date-view" [hidden]="viewMode!=0">
+        <div class="calendar-row calendar-header">
+            <div class="prev" (click)="calendar.previousYear()">
+                <a href="javascript:void(0)">‹‹</a>
+            </div>
+            <div class="prev" (click)="calendar.previousMonth()">
+                <a href="javascript:void(0)">‹</a>
+            </div>
+            <div class="date-title" (click)="viewMode=1">
+                <a href="javascript:void(0)">{{calendar.year + "年 " + months[calendar.month]}}</a>
+            </div>
+            <div class="next" (click)="calendar.nextMonth()">
+                <a href="javascript:void(0)">›</a>
+            </div>
+            <div class="next" (click)="calendar.nextYear()">
+                <a href="javascript:void(0)">››</a>
+            </div>
+        </div>
+
+        <div class="calendar-row">
+            <div class="day" *ng-for="#day of weekdays">
+                <span>{{day}}</span>
+            </div>
+        </div>
+
+        <div class="calendar-row" *ng-for="#row of calendar.days">
+            <div class="date" *ng-for="#day of row"
+                [class.disabled]="!dateInRange(day)"
+                [class.active]="!(day-calendar.selectedDate)"
+                 (click)="selectDate(day)">
+                <a href="javascript:void(0)" *ng-if="day">{{day.date.getDate()}}</a>
+                <span *ng-if="!day"></span>
+            </div>
+        </div>
+    </div>
+    <div class="month-view" [hidden]="viewMode!=1">
+        <div class="calendar-row calendar-header">
+            <div class="prev" (click)="calendar.previousYear()">
+                <a href="javascript:void(0)">‹</a>
+            </div>
+            <div class="month-title" (click)="viewMode=2">
+                <a href="javascript:void(0)">{{calendar.year}}</a>
+            </div>
+            <div class="next" (click)="calendar.nextYear()">
+                <a href="javascript:void(0)">›</a>
+            </div>
+        </div>
+
+        <div class="calendar-row">
+            <div class="month"
+                  *ng-for="#month of months; #i=index"
+                  [class.active]="month==months[calendar.month]"
+                  (click)="selectMonth(i)">
+                <a href="javascript:void(0)">{{month}}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="year-view" [hidden]="viewMode!=2">
+        <div class="calendar-row calendar-header">
+            <div class="prev" (click)="calendar.previousAge()">
+                <a href="javascript:void(0)">‹</a>
+            </div>
+            <div class="year-title">
+                <span>{{calendar.years[0] + " - " + calendar.years[9]}}</span>
+            </div>
+            <div class="next" (click)="calendar.nextAge()">
+                <a href="javascript:void(0)">›</a>
+            </div>
+        </div>
+
+        <div class="calendar-row">
+            <div class="year"
+                 *ng-for="#year of calendar.years"
+                 [class.active]="year==calendar.year"
+                 (click)="selectYear(year)">
+                <a href="javascript:void(0)">{{year}}</a>
+            </div>
+        </div>
+    </div>
+</div>
